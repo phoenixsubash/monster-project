@@ -1,33 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-          <a  
-            className = "App-link"
-            href = "https://subashpoudel.com"
-            target = "_blank"
-            rel= "noopener no noreferrer"
-            > My profile</a>
-        </div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    // It runs every time the function being called
+
+    super(); // this method help us to use this.state
+
+    this.state = {
+      monsters: [],
+    };
+  }
+
+  componentDidMount() {
+    //Everytime component loads it automatically calls the api for the data
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => this.setState({ monsters: users }));
+  }
+  render() {
+    return (
+      <div>
+        {this.state.monsters.map((monsters) => (
+          <h1 key={monsters.id}> {monsters.name}</h1>
+        ))}
+      </div>
+    );
+  }
 }
 
 export default App;
