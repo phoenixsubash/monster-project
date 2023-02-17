@@ -10,6 +10,7 @@ class App extends Component {
 
     this.state = {
       monsters: [],
+      searchField: "",
     };
   }
 
@@ -20,9 +21,18 @@ class App extends Component {
       .then((users) => this.setState({ monsters: users }));
   }
   render() {
+    const { monsters, searchField } = this.state; //copying the properties while keeping main state constant
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.includes(searchField.toLowerCase())
+    );
     return (
       <div>
-        <Cardlist monsters={this.state.monsters}></Cardlist>
+        <input
+          type="search"
+          placeholder="search monsters"
+          onChange={(e) => this.setState({ searchField: e.target.value })}
+        ></input>
+        <Cardlist monsters={filteredMonsters}></Cardlist>
       </div>
     );
   }
