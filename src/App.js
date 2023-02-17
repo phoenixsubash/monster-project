@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Cardlist } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/searchbox/search-box.component";
 import "./App.css";
 
 class App extends Component {
@@ -20,6 +21,11 @@ class App extends Component {
       .then((response) => response.json())
       .then((users) => this.setState({ monsters: users }));
   }
+
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value });
+  };
+
   render() {
     const { monsters, searchField } = this.state; //copying the properties while keeping main state constant
     const filteredMonsters = monsters.filter((monster) =>
@@ -27,11 +33,11 @@ class App extends Component {
     );
     return (
       <div>
-        <input
-          type="search"
-          placeholder="search monsters"
-          onChange={(e) => this.setState({ searchField: e.target.value })}
-        ></input>
+        <h1>Monster Rlolodex</h1>
+        <SearchBox
+          placeholder={"Search Monsters"}
+          handleChange={this.handleChange}
+        />
         <Cardlist monsters={filteredMonsters}></Cardlist>
       </div>
     );
